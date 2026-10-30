@@ -1,0 +1,36 @@
+[transformers] The tokenizer you are loading from '/workspace/qwen35-9b-merged' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+Loading weights:   0%|          | 0/760 [00:00<?, ?it/s]Loading weights:  61%|██████    | 461/760 [00:00<00:00, 4598.59it/s]Loading weights: 100%|██████████| 760/760 [00:00<00:00, 5284.72it/s]
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+[transformers] `causal_conv1d_update` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `fused_recurrent_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+Loading weights:   0%|          | 0/760 [00:00<?, ?it/s]Loading weights:  70%|███████   | 533/760 [00:00<00:00, 5327.88it/s]Loading weights: 100%|██████████| 760/760 [00:00<00:00, 5574.21it/s]
+Loading weights:   0%|          | 0/581 [00:00<?, ?it/s]Loading weights: 100%|██████████| 581/581 [00:00<00:00, 5892.06it/s]
+{
+ "kl_merged_mean": 0.00048291609118678025,
+ "kl_noise_floor_mean": 0.0004023067149319104,
+ "greedy_identical": [
+  true,
+  true,
+  true,
+  false,
+  true,
+  true,
+  false,
+  true,
+  false,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true
+ ],
+ "tokenizer_identical": [
+  true,
+  true,
+  true,
+  true
+ ]
+}

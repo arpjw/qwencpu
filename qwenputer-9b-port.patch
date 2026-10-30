@@ -1,0 +1,355 @@
+--- a/experimental/riscv/chipformer/rv/merge.py
++++ b/experimental/riscv/chipformer/rv/merge.py
+@@ -1,4 +1,4 @@
+-"""Merge the RV32 machine and its text bridge into Qwen3.5-4B (layout "rv1").
++"""Merge the RV32 machine and its text bridge into Qwen3.5 (layout "rv1").
+
+     python -m chipformer.rv.merge SRC --out dist/q4-rv1 [--no-mute]
+
+@@ -11,8 +11,10 @@
+   tau, its first 16 UTF-8 bytes, the ``<tool_call>`` / ``</tool_call>`` flags, and for the 260
+   printable tokens the output code of their echo); the RV32 tokens are appended after Qwen's
+   vocabulary as special tokens;
+-- the tied output head reads only the output code and tau among the chip dims (q35.merge's
+-  final-norm gains), and Qwen's layers are muted on chip tokens (q35.mute, on mu).
++- the output head reads only the output code and tau among the chip dims (q35.merge's
++  final-norm gains). For untied bases such as 9B, the original learned output weights are
++  preserved in the text dims, while the chip dims use the same rows as the tied circuit;
++- Qwen's layers are muted on chip tokens (q35.mute, on mu).
+
+ ``chipformer.json`` records the layout for the decoder (rv/chat.py).
+ """
+@@ -21,18 +23,33 @@
+ import re
+ from pathlib import Path
+
+-import numpy as np
+ import torch
+ from safetensors import safe_open
+
+ from chipformer.q35.merge import (IM_START, IN_COLS, OUT_ROWS, TAU_GAIN, WIDE_NORMS,
+                                   pick_hidden)
+ from chipformer.rv import bridge as BR
+-from chipformer.rv import core
+ from chipformer.rv import spec as S
++from chipformer.rv.merge_config import merged_text_config, output_head_is_tied
+
+ SRC_TEXT = "model.language_model."
+ DST = "model."
++
++
++def merged_output_head(base_head: torch.Tensor | None, emb: torch.Tensor,
++                       text_hidden: int, text_vocab: int,
++                       tied: bool) -> torch.Tensor | None:
++    """Preserve untied text logits while using circuit output codes for all rows."""
++    if tied:
++        return None
++    expected = (text_vocab, text_hidden)
++    if base_head is None or tuple(base_head.shape) != expected:
++        raise ValueError(f"untied base requires lm_head.weight shaped {expected}")
++    if emb.shape[0] < text_vocab or emb.shape[1] < text_hidden:
++        raise ValueError("merged embeddings are smaller than the base output head")
++    head = emb.clone()
++    head[:text_vocab, :text_hidden] = base_head
++    return head
+
+
+ def chip_token_names() -> list[str]:
+@@ -72,6 +89,7 @@
+     """Qwen's rows: the Qwen part, plus the chip features of each text token (a few special
+     rows exactly, every other row = the plain text row plus its byte bits)."""
+     from chipformer.q35.emit import embedding_rows
++    import numpy as np
+
+     h = lay.hidden
+     d0 = base_emb.shape[1]
+@@ -105,12 +123,14 @@
+
+     from chipformer.q35.emit import Layout, allocate, check_bf16, emit_layers
+     from chipformer.q35.ir import Target
++    from chipformer.rv import core
+     from chipformer.q35.tiny import code_gain
+     from chipformer.rv.tiny import embedding_matrix
+
+     src, dst = Path(src), Path(dst)
+     cfg = json.loads((src / "config.json").read_text())
+     tc0 = cfg["text_config"]
++    tied = output_head_is_tied(cfg)
+     d0, v0, inter = tc0["hidden_size"], tc0["vocab_size"], tc0["intermediate_size"]
+     T = BR.Text(src / "tokenizer.json")
+     c = core.build(Target(tc0["linear_num_key_heads"], tc0["linear_num_value_heads"], inter), T)
+@@ -126,11 +146,8 @@
+     print(f"circuit {c.stats()}, slots {alloc.n_slots}, hidden {hidden} (m={m}), "
+           f"{n_chip} chip layers", flush=True)
+
+-    tc = {k: v for k, v in tc0.items() if k != "full_attention_interval"}
+-    tc.update(hidden_size=hidden, num_hidden_layers=n_chip + n0, mtp_num_hidden_layers=0,
+-              layer_types=["linear_attention"] * n_chip + tc0["layer_types"],
+-              vocab_size=-(-(v0 + S.VOCAB) // 64) * 64, tie_word_embeddings=True,
+-              architectures=["Qwen3_5ForCausalLM"], model_type="qwen3_5_text")
++    tc = merged_text_config(tc0, hidden=hidden, n_chip=n_chip,
++                            chip_vocab=S.VOCAB, tied=tied)
+     vocab = tc["vocab_size"]
+
+     sinks = None
+@@ -145,9 +162,13 @@
+     scale = (d0 / hidden) ** 0.5
+     sd = {}
+     base_emb = None
++    base_head = None
+     for f in sorted(src.glob("*.safetensors")):
+         with safe_open(f, "pt") as fh:
+             for k in fh.keys():  # noqa: SIM118
++                if k == "lm_head.weight":
++                    base_head = fh.get_tensor(k)
++                    continue
+                 if not k.startswith(SRC_TEXT):
+                     continue  # vision tower, mtp
+                 w = fh.get_tensor(k)
+@@ -186,6 +207,10 @@
+     del chip
+     check_bf16("embedding", emb[:, d0:].float()[: min(vocab, 300000)])
+     sd[DST + "embed_tokens.weight"] = emb
++    head = merged_output_head(base_head, emb, d0, v0, tied)
++    if head is not None:
++        sd["lm_head.weight"] = head
++    del base_head
+
+     code = [next(iter(e.terms)) for e in c.code]
+     tau = next(iter(c.tau.terms))
+@@ -223,6 +248,7 @@
+             "chip_layers": n_chip, "qwen_layers_from": n_chip, "hidden": hidden,
+             "chip_dims_offset": d0, "ballast_dims": m, "circuit": c.stats(),
+             "slots": alloc.n_slots, "muted": mute_qwen,
++            "output_head_tied": tied,
+             "code_dims": [lay.dim(d) for d in code], "tau_dim": lay.dim(tau),
+             "mu_dim": lay.dim(next(iter(c.mu.terms))), "nfam": core.NFAM, "npay": core.NPAY,
+             "tool_call": [T.TCO, T.TCC], "printable": T.printable}
+--- /dev/null
++++ b/experimental/riscv/chipformer/rv/merge_config.py
+@@ -0,0 +1,20 @@
++"""Weight-free configuration checks for Qwen3.5 RV32 merges."""
++
++
++def output_head_is_tied(cfg: dict) -> bool:
++    """The full Qwen3.5 config owns the text model's output-head policy."""
++    return bool(cfg.get("tie_word_embeddings",
++                        cfg["text_config"].get("tie_word_embeddings", True)))
++
++
++def merged_text_config(tc0: dict, *, hidden: int, n_chip: int,
++                       chip_vocab: int, tied: bool) -> dict:
++    """Build the text-only config without changing the source config."""
++    tc = {k: v for k, v in tc0.items() if k != "full_attention_interval"}
++    tc.update(hidden_size=hidden, num_hidden_layers=n_chip + tc0["num_hidden_layers"],
++              mtp_num_hidden_layers=0,
++              layer_types=["linear_attention"] * n_chip + tc0["layer_types"],
++              vocab_size=-(-(tc0["vocab_size"] + chip_vocab) // 64) * 64,
++              tie_word_embeddings=tied, architectures=["Qwen3_5ForCausalLM"],
++              model_type="qwen3_5_text")
++    return tc
+--- /dev/null
++++ b/experimental/riscv/tests/test_merge_9b.py
+@@ -0,0 +1,62 @@
++"""Small tensor/config checks for untied Qwen3.5 output-head merging."""
++
++from __future__ import annotations
++
++import unittest
++
++import torch
++
++from chipformer.rv.merge import merged_output_head
++from chipformer.rv.merge_config import merged_text_config, output_head_is_tied
++
++
++class NineBMergeTests(unittest.TestCase):
++    def test_9b_outer_config_controls_untied_head(self) -> None:
++        cfg = {"tie_word_embeddings": False,
++               "text_config": {"tie_word_embeddings": True}}
++        self.assertFalse(output_head_is_tied(cfg))
++        self.assertTrue(output_head_is_tied({"tie_word_embeddings": True,
++                                             "text_config": {}}))
++
++    def test_untied_head_preserves_base_logits_and_circuit_rows(self) -> None:
++        base = torch.tensor([[1., 2., 3.], [4., 5., 6.]], dtype=torch.bfloat16)
++        emb = torch.tensor([[10., 11., 12., 1., 0.],
++                            [13., 14., 15., 0., 1.],
++                            [0., 0., 0., 1., 1.]], dtype=torch.bfloat16)
++        original = emb.clone()
++        head = merged_output_head(base, emb, 3, 2, tied=False)
++        assert head is not None
++        torch.testing.assert_close(head[:2, :3], base)
++        torch.testing.assert_close(head[:, 3:], emb[:, 3:])
++        torch.testing.assert_close(emb, original)
++        hidden = torch.tensor([2., -1., 3., 0., 0.], dtype=torch.bfloat16)
++        torch.testing.assert_close(head[:2] @ hidden, base @ hidden[:3])
++        chip_hidden = torch.tensor([0., 0., 0., 2., 3.], dtype=torch.bfloat16)
++        torch.testing.assert_close(head @ chip_hidden, emb @ chip_hidden)
++
++    def test_missing_or_misshapen_untied_head_fails_closed(self) -> None:
++        emb = torch.zeros(3, 5, dtype=torch.bfloat16)
++        for head in (None, torch.zeros(2, 4)):
++            with self.subTest(head=head):
++                with self.assertRaisesRegex(ValueError, "requires lm_head.weight shaped"):
++                    merged_output_head(head, emb, 3, 2, tied=False)
++        self.assertIsNone(merged_output_head(None, emb, 3, 2, tied=True))
++
++    def test_text_config_keeps_9b_untied_and_adds_chip_layers(self) -> None:
++        base = {"hidden_size": 4096, "num_hidden_layers": 32,
++                "vocab_size": 248320, "mtp_num_hidden_layers": 1,
++                "full_attention_interval": 4,
++                "layer_types": ["linear_attention"] * 24 + ["full_attention"] * 8}
++        merged = merged_text_config(base, hidden=7168, n_chip=11,
++                                    chip_vocab=230324, tied=False)
++        self.assertFalse(merged["tie_word_embeddings"])
++        self.assertEqual(merged["num_hidden_layers"], 43)
++        self.assertEqual(merged["layer_types"][:11], ["linear_attention"] * 11)
++        self.assertEqual(merged["layer_types"][11:], base["layer_types"])
++        self.assertEqual(merged["vocab_size"] % 64, 0)
++        self.assertNotIn("full_attention_interval", merged)
++        self.assertEqual(base["hidden_size"], 4096)
++
++
++if __name__ == "__main__":
++    unittest.main()
+--- /dev/null
++++ b/experimental/riscv/tests/test_merge_9b_config.py
+@@ -0,0 +1,31 @@
++"""Check the published 9B config without importing model or tensor packages."""
++
++from __future__ import annotations
++
++import json
++import unittest
++from pathlib import Path
++
++from chipformer.rv.merge_config import merged_text_config, output_head_is_tied
++
++
++class NineBConfigTests(unittest.TestCase):
++    def test_published_config_is_untied_and_has_required_heads(self) -> None:
++        fixture = Path(__file__).parent / "fixtures" / "qwen35_9b_config.json"
++        cfg = json.loads(fixture.read_text())
++        text = cfg["text_config"]
++        self.assertFalse(output_head_is_tied(cfg))
++        self.assertEqual(text["hidden_size"], 4096)
++        self.assertEqual(text["vocab_size"], 248320)
++        self.assertEqual((text["linear_num_key_heads"], text["linear_num_value_heads"]),
++                         (16, 32))
++        merged = merged_text_config(text, hidden=7168, n_chip=11,
++                                    chip_vocab=230324, tied=output_head_is_tied(cfg))
++        self.assertFalse(merged["tie_word_embeddings"])
++        self.assertEqual(merged["num_hidden_layers"], 43)
++        self.assertEqual(merged["vocab_size"], 478656)
++        self.assertEqual(merged["layer_types"][11:], text["layer_types"])
++
++
++if __name__ == "__main__":
++    unittest.main()
+--- /dev/null
++++ b/experimental/riscv/tests/fixtures/qwen35_9b_config.json
+@@ -0,0 +1,103 @@
++{
++    "architectures": [
++        "Qwen3_5ForConditionalGeneration"
++    ],
++    "image_token_id": 248056,
++    "model_type": "qwen3_5",
++    "text_config": {
++        "attention_bias": false,
++        "attention_dropout": 0.0,
++        "attn_output_gate": true,
++        "dtype": "bfloat16",
++        "eos_token_id": 248044,
++        "full_attention_interval": 4,
++        "head_dim": 256,
++        "hidden_act": "silu",
++        "hidden_size": 4096,
++        "initializer_range": 0.02,
++        "intermediate_size": 12288,
++        "layer_types": [
++            "linear_attention",
++            "linear_attention",
++            "linear_attention",
++            "full_attention",
++            "linear_attention",
++            "linear_attention",
++            "linear_attention",
++            "full_attention",
++            "linear_attention",
++            "linear_attention",
++            "linear_attention",
++            "full_attention",
++            "linear_attention",
++            "linear_attention",
++            "linear_attention",
++            "full_attention",
++            "linear_attention",
++            "linear_attention",
++            "linear_attention",
++            "full_attention",
++            "linear_attention",
++            "linear_attention",
++            "linear_attention",
++            "full_attention",
++            "linear_attention",
++            "linear_attention",
++            "linear_attention",
++            "full_attention",
++            "linear_attention",
++            "linear_attention",
++            "linear_attention",
++            "full_attention"
++        ],
++        "linear_conv_kernel_dim": 4,
++        "linear_key_head_dim": 128,
++        "linear_num_key_heads": 16,
++        "linear_num_value_heads": 32,
++        "linear_value_head_dim": 128,
++        "max_position_embeddings": 262144,
++        "mlp_only_layers": [],
++        "model_type": "qwen3_5_text",
++        "mtp_num_hidden_layers": 1,
++        "mtp_use_dedicated_embeddings": false,
++        "num_attention_heads": 16,
++        "num_hidden_layers": 32,
++        "num_key_value_heads": 4,
++        "rms_norm_eps": 1e-06,
++        "use_cache": true,
++        "vocab_size": 248320,
++        "mamba_ssm_dtype": "float32",
++        "rope_parameters": {
++            "mrope_interleaved": true,
++            "mrope_section": [
++                11,
++                11,
++                10
++            ],
++            "rope_type": "default",
++            "rope_theta": 10000000,
++            "partial_rotary_factor": 0.25
++        }
++    },
++    "tie_word_embeddings": false,
++    "transformers_version": "4.57.0.dev0",
++    "video_token_id": 248057,
++    "vision_config": {
++        "deepstack_visual_indexes": [],
++        "depth": 27,
++        "hidden_act": "gelu_pytorch_tanh",
++        "hidden_size": 1152,
++        "in_channels": 3,
++        "initializer_range": 0.02,
++        "intermediate_size": 4304,
++        "model_type": "qwen3_5",
++        "num_heads": 16,
++        "num_position_embeddings": 2304,
++        "out_hidden_size": 4096,
++        "patch_size": 16,
++        "spatial_merge_size": 2,
++        "temporal_patch_size": 2
++    },
++    "vision_end_token_id": 248054,
++    "vision_start_token_id": 248053
++}

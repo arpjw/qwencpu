@@ -1,0 +1,505 @@
+{
+  "schema": 1,
+  "base": "/workspace/qwen35-9b",
+  "merged": "/workspace/qwen35-9b-byte-dynamic256",
+  "model_layout": "byte9b-v1",
+  "rom_size": 256,
+  "device": "cuda",
+  "torch": "2.14.1+cu130",
+  "transformers": "5.19.0",
+  "prompt_sha256": "36542c85a4dfacb19bbece0e30bf7a0f2229552b43d10bc053e43c4d8ee2d6bf",
+  "new_tokens": 8,
+  "prompt_count": 12,
+  "tokenizer_identical": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "next_token_top1_same": 12,
+  "greedy_identical": 12,
+  "next_token_kl_mean": 0.0006159340196253046,
+  "records": [
+    {
+      "prompt": "Hello! Tell me one interesting fact about the Moon.",
+      "prompt_tokens": 23,
+      "tokenizer_ids_same": true,
+      "next_token": {
+        "kl_base_to_other": 0.0004119666409678757,
+        "max_abs_logit_difference": 0.15625,
+        "same_top1": true,
+        "base_top1": 8160,
+        "other_top1": 8160
+      },
+      "greedy_identical": true,
+      "base_greedy_ids": [
+        8160,
+        369,
+        264,
+        25450,
+        2029,
+        883,
+        279,
+        16820
+      ],
+      "merged_greedy_ids": [
+        8160,
+        369,
+        264,
+        25450,
+        2029,
+        883,
+        279,
+        16820
+      ],
+      "cpu_ids_in_merged_greedy": 0
+    },
+    {
+      "prompt": "Summarize this in one sentence: A small team repaired a bridge overnight so buses could run at dawn.",
+      "prompt_tokens": 34,
+      "tokenizer_ids_same": true,
+      "next_token": {
+        "kl_base_to_other": 3.231992741348222e-05,
+        "max_abs_logit_difference": 0.140625,
+        "same_top1": true,
+        "base_top1": 32,
+        "other_top1": 32
+      },
+      "greedy_identical": true,
+      "base_greedy_ids": [
+        32,
+        2526,
+        2015,
+        6237,
+        23626,
+        310,
+        12368,
+        264
+      ],
+      "merged_greedy_ids": [
+        32,
+        2526,
+        2015,
+        6237,
+        23626,
+        310,
+        12368,
+        264
+      ],
+      "cpu_ids_in_merged_greedy": 0
+    },
+    {
+      "prompt": "Write a Python function that reverses a list without changing the original.",
+      "prompt_tokens": 26,
+      "tokenizer_ids_same": true,
+      "next_token": {
+        "kl_base_to_other": 0.0002298922190675512,
+        "max_abs_logit_difference": 0.234375,
+        "same_top1": true,
+        "base_top1": 71093,
+        "other_top1": 71093
+      },
+      "greedy_identical": true,
+      "base_greedy_ids": [
+        71093,
+        12305,
+        198,
+        727,
+        9637,
+        1951,
+        38581,
+        7245
+      ],
+      "merged_greedy_ids": [
+        71093,
+        12305,
+        198,
+        727,
+        9637,
+        1951,
+        38581,
+        7245
+      ],
+      "cpu_ids_in_merged_greedy": 0
+    },
+    {
+      "prompt": "What is the difference between a mutex and a semaphore?",
+      "prompt_tokens": 23,
+      "tokenizer_ids_same": true,
+      "next_token": {
+        "kl_base_to_other": 2.580328555268352e-06,
+        "max_abs_logit_difference": 0.1875,
+        "same_top1": true,
+        "base_top1": 20003,
+        "other_top1": 20003
+      },
+      "greedy_identical": true,
+      "base_greedy_ids": [
+        20003,
+        2972,
+        21670,
+        287,
+        332,
+        318,
+        6767,
+        899
+      ],
+      "merged_greedy_ids": [
+        20003,
+        2972,
+        21670,
+        287,
+        332,
+        318,
+        6767,
+        899
+      ],
+      "cpu_ids_in_merged_greedy": 0
+    },
+    {
+      "prompt": "Explain why ice floats on liquid water.",
+      "prompt_tokens": 21,
+      "tokenizer_ids_same": true,
+      "next_token": {
+        "kl_base_to_other": 1.185259134217631e-05,
+        "max_abs_logit_difference": 0.1875,
+        "same_top1": true,
+        "base_top1": 760,
+        "other_top1": 760
+      },
+      "greedy_identical": true,
+      "base_greedy_ids": [
+        760,
+        2781,
+        9561,
+        46303,
+        383,
+        14058,
+        2919,
+        369
+      ],
+      "merged_greedy_ids": [
+        760,
+        2781,
+        9561,
+        46303,
+        383,
+        14058,
+        2919,
+        369
+      ],
+      "cpu_ids_in_merged_greedy": 0
+    },
+    {
+      "prompt": "Continue this JSON object with one field: {\"status\": \"ok\"",
+      "prompt_tokens": 26,
+      "tokenizer_ids_same": true,
+      "next_token": {
+        "kl_base_to_other": 0.002032990101724863,
+        "max_abs_logit_difference": 0.171875,
+        "same_top1": true,
+        "base_top1": 4754,
+        "other_top1": 4754
+      },
+      "greedy_identical": true,
+      "base_greedy_ids": [
+        4754,
+        2738,
+        763,
+        328,
+        547,
+        487,
+        328,
+        1927
+      ],
+      "merged_greedy_ids": [
+        4754,
+        2738,
+        763,
+        328,
+        547,
+        487,
+        328,
+        1927
+      ],
+      "cpu_ids_in_merged_greedy": 0
+    },
+    {
+      "prompt": "Make a short numbered checklist for packing a weekend bag.",
+      "prompt_tokens": 23,
+      "tokenizer_ids_same": true,
+      "next_token": {
+        "kl_base_to_other": 0.0010211229091510177,
+        "max_abs_logit_difference": 0.12890625,
+        "same_top1": true,
+        "base_top1": 8160,
+        "other_top1": 8160
+      },
+      "greedy_identical": true,
+      "base_greedy_ids": [
+        8160,
+        369,
+        264,
+        2716,
+        50802,
+        364,
+        34532,
+        264
+      ],
+      "merged_greedy_ids": [
+        8160,
+        369,
+        264,
+        2716,
+        50802,
+        364,
+        34532,
+        264
+      ],
+      "cpu_ids_in_merged_greedy": 0
+    },
+    {
+      "prompt": "Translate 'Good morning, how are you?' into Spanish.",
+      "prompt_tokens": 24,
+      "tokenizer_ids_same": true,
+      "next_token": {
+        "kl_base_to_other": 2.3799635528121144e-05,
+        "max_abs_logit_difference": 0.1484375,
+        "same_top1": true,
+        "base_top1": 33,
+        "other_top1": 33
+      },
+      "greedy_identical": true,
+      "base_greedy_ids": [
+        33,
+        10010,
+        428,
+        43575,
+        11,
+        27368,
+        227604,
+        181456
+      ],
+      "merged_greedy_ids": [
+        33,
+        10010,
+        428,
+        43575,
+        11,
+        27368,
+        227604,
+        181456
+      ],
+      "cpu_ids_in_merged_greedy": 0
+    },
+    {
+      "prompt": "The café opened in 東京. Describe the scene in English.",
+      "prompt_tokens": 25,
+      "tokenizer_ids_same": true,
+      "next_token": {
+        "kl_base_to_other": 0.002168691251426935,
+        "max_abs_logit_difference": 0.15625,
+        "same_top1": true,
+        "base_top1": 45,
+        "other_top1": 45
+      },
+      "greedy_identical": true,
+      "base_greedy_ids": [
+        45,
+        467,
+        806,
+        303,
+        279,
+        4593,
+        314,
+        25358
+      ],
+      "merged_greedy_ids": [
+        45,
+        467,
+        806,
+        303,
+        279,
+        4593,
+        314,
+        25358
+      ],
+      "cpu_ids_in_merged_greedy": 0
+    },
+    {
+      "prompt": "Complete the sentence: In a proof by induction, the base case",
+      "prompt_tokens": 25,
+      "tokenizer_ids_same": true,
+      "next_token": {
+        "kl_base_to_other": 2.7355945348972455e-06,
+        "max_abs_logit_difference": 0.171875,
+        "same_top1": true,
+        "base_top1": 623,
+        "other_top1": 623
+      },
+      "greedy_identical": true,
+      "base_greedy_ids": [
+        623,
+        264,
+        10741,
+        539,
+        35826,
+        11,
+        279,
+        2255
+      ],
+      "merged_greedy_ids": [
+        623,
+        264,
+        10741,
+        539,
+        35826,
+        11,
+        279,
+        2255
+      ],
+      "cpu_ids_in_merged_greedy": 0
+    },
+    {
+      "prompt": "A customer says the app froze after saving. Give a concise support reply.",
+      "prompt_tokens": 27,
+      "tokenizer_ids_same": true,
+      "next_token": {
+        "kl_base_to_other": 0.0014418892096728086,
+        "max_abs_logit_difference": 0.1875,
+        "same_top1": true,
+        "base_top1": 40,
+        "other_top1": 40
+      },
+      "greedy_identical": true,
+      "base_greedy_ids": [
+        40,
+        2688,
+        14169,
+        310,
+        6512,
+        279,
+        878,
+        85946
+      ],
+      "merged_greedy_ids": [
+        40,
+        2688,
+        14169,
+        310,
+        6512,
+        279,
+        878,
+        85946
+      ],
+      "cpu_ids_in_merged_greedy": 0
+    },
+    {
+      "prompt": "List two possible causes of a slow database query.",
+      "prompt_tokens": 22,
+      "tokenizer_ids_same": true,
+      "next_token": {
+        "kl_base_to_other": 1.1367826118657831e-05,
+        "max_abs_logit_difference": 0.1875,
+        "same_top1": true,
+        "base_top1": 8160,
+        "other_top1": 8160
+      },
+      "greedy_identical": true,
+      "base_greedy_ids": [
+        8160,
+        513,
+        1330,
+        4047,
+        10814,
+        314,
+        6103,
+        4475
+      ],
+      "merged_greedy_ids": [
+        8160,
+        513,
+        1330,
+        4047,
+        10814,
+        314,
+        6103,
+        4475
+      ],
+      "cpu_ids_in_merged_greedy": 0
+    }
+  ],
+  "handoff_cpu_program": "10ff200230001000500e400050102001ff",
+  "handoff_cpu_expected_tokens": [
+    379392,
+    313602,
+    379392,
+    248580,
+    379392,
+    248582,
+    379392,
+    248328,
+    379392,
+    248330,
+    379392,
+    248588,
+    379392,
+    248592,
+    379392,
+    314128
+  ],
+  "handoff_cpu_generated_tokens": [
+    379392,
+    313602,
+    379392,
+    248580,
+    379392,
+    248582,
+    379392,
+    248328,
+    379392,
+    248330,
+    379392,
+    248588,
+    379392,
+    248592,
+    379392,
+    314128
+  ],
+  "handoff_cpu_exact": true,
+  "handoff": [
+    {
+      "prompt": "Hello! Tell me one interesting fact about the Moon.",
+      "text_tokens": 23,
+      "cpu_context_tokens": 35,
+      "plain_vs_after_cpu": {
+        "kl_base_to_other": 0.7230539917945862,
+        "max_abs_logit_difference": 9.5625,
+        "same_top1": false,
+        "base_top1": 8160,
+        "other_top1": 3833
+      }
+    },
+    {
+      "prompt": "What is the difference between a mutex and a semaphore?",
+      "text_tokens": 23,
+      "cpu_context_tokens": 35,
+      "plain_vs_after_cpu": {
+        "kl_base_to_other": 0.28856635093688965,
+        "max_abs_logit_difference": 8.8125,
+        "same_top1": false,
+        "base_top1": 20003,
+        "other_top1": 760
+      }
+    }
+  ],
+  "seconds": 125.349
+}

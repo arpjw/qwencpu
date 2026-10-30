@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="380" viewBox="0 0 900 380" role="img" aria-labelledby="title desc">
+  <title id="title">Frozen 24-case arithmetic benchmark</title>
+  <desc id="desc">Strict boxed exact answers: base Qwen3.5-9B 4 of 24, base 9B with a host calculator 23 of 24, and merged RV32 9B calculator 23 of 24. This is a small synthetic frozen suite.</desc>
+  <rect x="0.5" y="0.5" width="899" height="379" rx="20" fill="#f8fafc" stroke="#dbe4ef"/>
+  <text x="34" y="48" fill="#0f172a" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700">Arithmetic, with and without a calculator</text>
+  <text x="34" y="77" fill="#475569" font-family="Arial, Helvetica, sans-serif" font-size="17">Strict exact answer in a final boxed expression</text>
+  <rect x="700" y="30" width="166" height="28" rx="14" fill="#e0f2fe"/>
+  <text x="783" y="49" text-anchor="middle" fill="#075985" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" letter-spacing="0.7">24 FROZEN CASES</text>
+
+  <g fill="#64748b" font-family="Arial, Helvetica, sans-serif" font-size="13">
+    <text x="260" y="114" text-anchor="middle">0%</text>
+    <text x="380" y="114" text-anchor="middle">25%</text>
+    <text x="500" y="114" text-anchor="middle">50%</text>
+    <text x="620" y="114" text-anchor="middle">75%</text>
+    <text x="740" y="114" text-anchor="middle">100%</text>
+  </g>
+  <g stroke="#cbd5e1" stroke-width="1">
+    <line x1="260" y1="124" x2="260" y2="306"/>
+    <line x1="380" y1="124" x2="380" y2="306" stroke-dasharray="3 5"/>
+    <line x1="500" y1="124" x2="500" y2="306" stroke-dasharray="3 5"/>
+    <line x1="620" y1="124" x2="620" y2="306" stroke-dasharray="3 5"/>
+    <line x1="740" y1="124" x2="740" y2="306"/>
+  </g>
+
+  <g font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="600" fill="#1e293b">
+    <text x="34" y="166">Base 9B</text>
+    <text x="34" y="225">Base 9B + host tool</text>
+    <text x="34" y="284">Merged RV32 9B</text>
+  </g>
+  <g fill="#e2e8f0">
+    <rect x="260" y="137" width="480" height="42" rx="8"/>
+    <rect x="260" y="196" width="480" height="42" rx="8"/>
+    <rect x="260" y="255" width="480" height="42" rx="8"/>
+  </g>
+  <rect x="260" y="137" width="80" height="42" rx="8" fill="#64748b"/>
+  <rect x="260" y="196" width="460" height="42" rx="8" fill="#0f766e"/>
+  <rect x="260" y="255" width="460" height="42" rx="8" fill="#6d28d9"/>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#0f172a">
+    <text x="758" y="165">4/24</text>
+    <text x="758" y="224">23/24</text>
+    <text x="758" y="283">23/24</text>
+  </g>
+  <line x1="34" y1="321" x2="866" y2="321" stroke="#dbe4ef"/>
+  <text x="34" y="350" fill="#475569" font-family="Arial, Helvetica, sans-serif" font-size="14">Both tool arms missed the same token-limited fraction case. Small synthetic suite, not a general reliability result.</text>
+</svg>

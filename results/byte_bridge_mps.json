@@ -1,0 +1,65 @@
+{
+  "program_hex": "2007ff",
+  "device": "mps",
+  "torch": "2.14.1",
+  "transformers": "5.19.0",
+  "examples": [
+    {
+      "input": 0,
+      "result": 7,
+      "steps": 2,
+      "generated_ids": [
+        131072,
+        1794,
+        131072,
+        67330
+      ],
+      "final_pc": 2,
+      "expected": 7,
+      "exact": true
+    },
+    {
+      "input": 201,
+      "result": 208,
+      "steps": 2,
+      "generated_ids": [
+        131072,
+        53250,
+        131072,
+        118786
+      ],
+      "final_pc": 2,
+      "expected": 208,
+      "exact": true
+    },
+    {
+      "input": 249,
+      "result": 0,
+      "steps": 2,
+      "generated_ids": [
+        131072,
+        2,
+        131072,
+        65538
+      ],
+      "final_pc": 2,
+      "expected": 0,
+      "exact": true
+    },
+    {
+      "input": 255,
+      "result": 6,
+      "steps": 2,
+      "generated_ids": [
+        131072,
+        1538,
+        131072,
+        67074
+      ],
+      "final_pc": 2,
+      "expected": 6,
+      "exact": true
+    }
+  ],
+  "all_exact": true
+}

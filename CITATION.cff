@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use QwenCPU, please cite this repository and the upstream Qwenputer project."
+type: software
+title: "QwenCPU: an 8-bit CPU in Qwen3.5 Gated DeltaNet state"
+authors:
+  - family-names: Somu
+    given-names: Arya
+repository-code: https://github.com/arpjw/qwencpu
+license: MIT
+date-released: 2026-10-29

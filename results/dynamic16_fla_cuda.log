@@ -1,0 +1,15 @@
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `causal_conv1d_update` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+{"id": "ram-add-0", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 12, "seconds": 0.729}
+{"id": "ram-add-1", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 12, "seconds": 0.267}
+{"id": "ram-add-2", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 12, "seconds": 0.266}
+{"id": "ram-add-3", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 12, "seconds": 0.256}
+{"id": "ram-add-4", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 12, "seconds": 0.263}
+{"id": "ram-add-5", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 12, "seconds": 0.264}
+{"id": "ram-add-6", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 12, "seconds": 0.255}
+{"id": "ram-add-7", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 12, "seconds": 0.254}
+{"id": "branch-taken", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 8, "seconds": 0.177}
+{"id": "branch-not-taken", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 8, "seconds": 0.175}
+{"id": "nop-halt", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 6, "seconds": 0.135}
+{"id": "wraparound", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 6, "seconds": 0.137}
+{"all_exact": true, "cases": 12, "out": "/workspace/dynamic16_fla_cuda.json"}

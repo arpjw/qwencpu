@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  stdlib-tests:
+    name: Standard-library tests (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Compile Python sources
+        run: python -m compileall -q gdn_cpu eval tests
+      - name: Run dependency-free tests
+        run: python -m unittest discover -s tests -v
+      - name: Verify frozen fixture hashes
+        run: |
+          python - <<'PY'
+          import hashlib
+          from pathlib import Path
+
+          expected = {
+              'arithmetic.jsonl': 'a4277e1e79229b258319454b237f2f84749c67da3ad1d60f0dcbd3fc6f4e0896',
+              'programs.jsonl': '9b47c391cb96c55d176b688cb2bc009bb8e6a607e3498d8e81f260b2e7833f06',
+              'dynamic256.jsonl': '184fed28d5f5130cd1bc4abd071bdc2dd057551756adba097abf2ff77a4b0975',
+              'byte_bridge.jsonl': 'e5747da0f76b120b82ab948bedae8015e74e6e1d10847d3c2544d196be6dec83',
+          }
+          for name, wanted in expected.items():
+              got = hashlib.sha256((Path('eval/frozen') / name).read_bytes()).hexdigest()
+              assert got == wanted, f'{name}: {got} != {wanted}'
+          PY

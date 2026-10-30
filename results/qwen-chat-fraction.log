@@ -1,0 +1,29 @@
+Loading weights:   0%|          | 0/581 [00:00<?, ?it/s]Loading weights:  86%|████████▋ | 502/581 [00:00<00:00, 5013.49it/s]Loading weights: 100%|██████████| 581/581 [00:00<00:00, 5521.96it/s]
+[transformers] The tokenizer you are loading from '/workspace/qwen35-9b-merged' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+[transformers] `causal_conv1d_update` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `fused_recurrent_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+  500 tokens (29 text, 470 chip) 2s: V(182) F1(1) F0(115) J(1323) J(1384) F0(53) F0(0) F0(1)
+  1000 tokens (32 text, 967 chip) 3s: BD(0) BD(0) BD(0) BD(0) BD(0) BD(0) BD(0) BD(0)
+  1500 tokens (32 text, 1467 chip) 4s: F1(32) F0(258) V(64) F1(32) V(322) F1(32) BD(4) BD(8)
+  2000 tokens (32 text, 1967 chip) 5s: F0(1) F0(31) ST0 F0(16) F0(0) F0(63) F0(36) NT
+  2500 tokens (32 text, 2467 chip) 6s: F0(1) F0(4) V(2280) F1(8) F0(32763) F0(11) ST0 F0(0)
+  3000 tokens (32 text, 2967 chip) 7s: F0(1) F0(1) J(60) F0(0) F0(0) NT V(0) F1(2)
+<tool_call>
+<function=calc>
+<parameter=expression>
+84/18
+</parameter>
+</function>
+</tool_call>
+<tool_response>
+14/3
+</tool_response>
+<think>
+
+</think>
+
+The result of 84/18 is 14/3.<|im_end|>
+[61 text + 3136 chip tokens in 8.4s, head mismatches 0, lock error None]
+{'ok': True, 'positions': 3588, 'owned': 3152, 'wrong_predictions': 0, 'owner_mismatch': 0, 'runs': 1}

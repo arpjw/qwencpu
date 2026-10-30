@@ -1,0 +1,8 @@
+{"id":"explicit-0","kind":"explicit","x":0,"gold":"7","prompt":"Use byte_add7 with x=0 to compute the unsigned byte result. Give the final answer in \\boxed{}."}
+{"id":"explicit-201","kind":"explicit","x":201,"gold":"208","prompt":"Call byte_add7 for x=201. What unsigned byte does it return? Give the final answer in \\boxed{}."}
+{"id":"explicit-249","kind":"explicit","x":249,"gold":"0","prompt":"Use the byte_add7 tool with x=249. Report the wrapped result in \\boxed{}."}
+{"id":"explicit-255","kind":"explicit","x":255,"gold":"6","prompt":"Call byte_add7 with the largest unsigned byte, x=255. Give the result in \\boxed{}."}
+{"id":"implicit-42","kind":"implicit","x":42,"gold":"49","prompt":"A byte register contains 42. Add seven modulo 256. Give the final answer in \\boxed{}."}
+{"id":"implicit-127","kind":"implicit","x":127,"gold":"134","prompt":"What unsigned byte results from 127 plus seven? Give the final answer in \\boxed{}."}
+{"id":"implicit-250","kind":"implicit","x":250,"gold":"1","prompt":"An 8-bit register holds 250. Increment it by seven with wraparound. Give the answer in \\boxed{}."}
+{"id":"implicit-7","kind":"implicit","x":7,"gold":"14","prompt":"Compute seven more than the unsigned byte 7, modulo 256. Give the answer in \\boxed{}."}

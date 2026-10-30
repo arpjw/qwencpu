@@ -1,0 +1,27 @@
+test_compiled_add7_with_wraparound (test_byte_bridge.ByteModelToolTests.test_compiled_add7_with_wraparound) ... [transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+[transformers] `causal_conv1d_update` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `fused_recurrent_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+ok
+test_valid_and_invalid_tool_calls (test_byte_bridge.ToolParsingTests.test_valid_and_invalid_tool_calls) ... ok
+test_adder_boundary_cases (test_circuit.CircuitTests.test_adder_boundary_cases) ... ok
+test_branch_ram_and_wrap_match_reference_at_each_step (test_circuit.CircuitTests.test_branch_ram_and_wrap_match_reference_at_each_step) ... ok
+test_invalid_memory_address_matches_oracle_error (test_circuit.CircuitTests.test_invalid_memory_address_matches_oracle_error) ... ok
+test_program_counter_can_reach_256_without_wrapping (test_circuit.CircuitTests.test_program_counter_can_reach_256_without_wrapping) ... ok
+test_random_straight_line_programs_match_oracle (test_circuit.CircuitTests.test_random_straight_line_programs_match_oracle) ... ok
+test_addressed_overwrite_survives_long_history (test_circuit.MemoryTests.test_addressed_overwrite_survives_long_history) ... ok
+test_masked_write_does_not_change_memory (test_circuit.MemoryTests.test_masked_write_does_not_change_memory) ... ok
+test_three_programs_one_graph_with_high_bank_addresses (test_qwen8_dynamic_ir.DynamicROMIRTests.test_three_programs_one_graph_with_high_bank_addresses) ... ok
+test_random_straight_line_programs (test_qwen8_ir.Qwen8IRTests.test_random_straight_line_programs) ... ok
+test_reference_traces (test_qwen8_ir.Qwen8IRTests.test_reference_traces) ... ok
+test_register_and_ram_heads (test_qwen8_recurrent_ir.RecurrentQwen8IRTests.test_register_and_ram_heads) ... ok
+test_arithmetic_wrap_and_memory_round_trip (test_reference.ReferenceCPUTests.test_arithmetic_wrap_and_memory_round_trip) ... ok
+test_halt_is_inert (test_reference.ReferenceCPUTests.test_halt_is_inert) ... ok
+test_invalid_fetch_operand_opcode_and_address_fail (test_reference.ReferenceCPUTests.test_invalid_fetch_operand_opcode_and_address_fail) ... ok
+test_jnz_takes_branch_only_for_nonzero_accumulator (test_reference.ReferenceCPUTests.test_jnz_takes_branch_only_for_nonzero_accumulator) ... ok
+test_loop_bound_catches_program_without_halt (test_reference.ReferenceCPUTests.test_loop_bound_catches_program_without_halt) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 13.602s
+
+OK

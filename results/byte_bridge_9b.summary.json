@@ -1,0 +1,53 @@
+{
+  "fixture_sha256": "e5747da0f76b120b82ab948bedae8015e74e6e1d10847d3c2544d196be6dec83",
+  "model": "/workspace/qwen35-9b",
+  "device": "cuda",
+  "torch": "2.14.1+cu130",
+  "transformers": "5.19.0",
+  "cpu_program_hex": "2007ff",
+  "cpu_graph": {
+    "layers": 11,
+    "dims": 407,
+    "heads": 2,
+    "ffn_units": 456,
+    "max_units": 294,
+    "max_heads": 1
+  },
+  "max_text_tokens": 1024,
+  "cases": 8,
+  "completed": 8,
+  "tool_calls_emitted": 7,
+  "valid_tool_calls": 7,
+  "cpu_errors": 0,
+  "correct_tool_inputs": 7,
+  "correct_cpu_results": 7,
+  "cpu_consistent_with_requested_input": 7,
+  "exact_parsed_answers": 8,
+  "exact_boxed_final_answers": 8,
+  "by_kind": {
+    "explicit": {
+      "cases": 4,
+      "completed": 4,
+      "tool_calls_emitted": 3,
+      "valid_tool_calls": 3,
+      "cpu_errors": 0,
+      "correct_tool_inputs": 3,
+      "correct_cpu_results": 3,
+      "cpu_consistent_with_requested_input": 3,
+      "exact_parsed_answers": 4,
+      "exact_boxed_final_answers": 4
+    },
+    "implicit": {
+      "cases": 4,
+      "completed": 4,
+      "tool_calls_emitted": 4,
+      "valid_tool_calls": 4,
+      "cpu_errors": 0,
+      "correct_tool_inputs": 4,
+      "correct_cpu_results": 4,
+      "cpu_consistent_with_requested_input": 4,
+      "exact_parsed_answers": 4,
+      "exact_boxed_final_answers": 4
+    }
+  }
+}

@@ -1,0 +1,17 @@
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+[transformers] `causal_conv1d_update` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `fused_recurrent_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+{"id": "ram-add-0", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 12, "seconds": 0.553}
+{"id": "ram-add-1", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 12, "seconds": 0.297}
+{"id": "ram-add-2", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 12, "seconds": 0.3}
+{"id": "ram-add-3", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 12, "seconds": 0.304}
+{"id": "ram-add-4", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 12, "seconds": 0.299}
+{"id": "ram-add-5", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 12, "seconds": 0.305}
+{"id": "ram-add-6", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 12, "seconds": 0.298}
+{"id": "ram-add-7", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 12, "seconds": 0.304}
+{"id": "branch-taken", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 8, "seconds": 0.207}
+{"id": "branch-not-taken", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 8, "seconds": 0.205}
+{"id": "nop-halt", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 6, "seconds": 0.158}
+{"id": "wraparound", "tokens_exact": true, "rom_exact": true, "ram_exact": true, "tokens": 6, "seconds": 0.163}
+{"all_exact": true, "cases": 12, "out": "/workspace/dynamic16_cuda.json"}

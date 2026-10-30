@@ -1,0 +1,28 @@
+Loading weights:   0%|          | 0/760 [00:00<?, ?it/s]Loading weights:  23%|██▎       | 174/760 [00:00<00:00, 1704.88it/s]Loading weights:  45%|████▌     | 345/760 [00:00<00:00, 1588.38it/s]Loading weights:  66%|██████▋   | 505/760 [00:00<00:00, 1344.38it/s]Loading weights:  88%|████████▊ | 672/760 [00:00<00:00, 1431.74it/s]Loading weights: 100%|██████████| 760/760 [00:00<00:00, 1518.49it/s]
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+[transformers] `causal_conv1d_update` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `fused_recurrent_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+{"id": "add-1", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 3.046}
+{"id": "add-2", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 2.576}
+{"id": "add-3", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 2.566}
+{"id": "mul-0", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 2.458}
+{"id": "mul-1", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 2.361}
+{"id": "mul-2", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 2.438}
+{"id": "mul-3", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 2.361}
+{"id": "gcd-0", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 2.237}
+{"id": "gcd-1", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 2.184}
+{"id": "gcd-2", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 2.153}
+{"id": "gcd-3", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 2.12}
+{"id": "frac-0", "arm": "base_host", "exact": true, "calls": 2, "lock_error": null, "head_mismatch": null, "seconds": 4.803}
+{"id": "frac-1", "arm": "base_host", "exact": true, "calls": 2, "lock_error": null, "head_mismatch": null, "seconds": 4.791}
+{"id": "frac-2", "arm": "base_host", "exact": false, "calls": 3, "lock_error": null, "head_mismatch": null, "seconds": 72.406}
+{"id": "frac-3", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 2.675}
+{"id": "sub-0", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 1.975}
+{"id": "sub-1", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 1.957}
+{"id": "sub-2", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 1.94}
+{"id": "sub-3", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 1.952}
+{"id": "divmod-0", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 2.013}
+{"id": "divmod-1", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 2.016}
+{"id": "divmod-2", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 2.0}
+{"id": "divmod-3", "arm": "base_host", "exact": true, "calls": 1, "lock_error": null, "head_mismatch": null, "seconds": 1.952}

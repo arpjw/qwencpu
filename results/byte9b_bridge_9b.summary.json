@@ -1,0 +1,53 @@
+{
+  "fixture": "/workspace/gdn-eval/gdn-cpu-lab/eval/frozen/byte_bridge.jsonl",
+  "fixture_sha256": "e5747da0f76b120b82ab948bedae8015e74e6e1d10847d3c2544d196be6dec83",
+  "model": "/workspace/qwen35-9b-byte-dynamic256",
+  "model_loads": 1,
+  "same_checkpoint": true,
+  "separate_caches": true,
+  "device": "cuda",
+  "torch": "2.14.1+cu130",
+  "transformers": "5.19.0",
+  "cpu_program_hex": "2007ff",
+  "rom_size": 256,
+  "max_text_tokens": 1024,
+  "cases": 8,
+  "completed": 8,
+  "tool_calls_emitted": 7,
+  "valid_tool_calls": 7,
+  "correct_tool_inputs": 7,
+  "cpu_errors": 0,
+  "cpu_traces_exact": 7,
+  "cpu_results_for_requested_input_exact": 7,
+  "cpu_results_for_question_exact": 7,
+  "final_answers_exact": 8,
+  "final_boxed_answers_exact": 8,
+  "by_kind": {
+    "explicit": {
+      "cases": 4,
+      "completed": 4,
+      "tool_calls_emitted": 3,
+      "valid_tool_calls": 3,
+      "correct_tool_inputs": 3,
+      "cpu_errors": 0,
+      "cpu_traces_exact": 3,
+      "cpu_results_for_requested_input_exact": 3,
+      "cpu_results_for_question_exact": 3,
+      "final_answers_exact": 4,
+      "final_boxed_answers_exact": 4
+    },
+    "implicit": {
+      "cases": 4,
+      "completed": 4,
+      "tool_calls_emitted": 4,
+      "valid_tool_calls": 4,
+      "correct_tool_inputs": 4,
+      "cpu_errors": 0,
+      "cpu_traces_exact": 4,
+      "cpu_results_for_requested_input_exact": 4,
+      "cpu_results_for_question_exact": 4,
+      "final_answers_exact": 4,
+      "final_boxed_answers_exact": 4
+    }
+  }
+}
